@@ -1,5 +1,6 @@
-package com.freightmate.consignment.services.calculator;
+package com.freightmate.consignment.services;
 
+import com.freightmate.consignment.services.calculator.ChecksumCalculator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
