@@ -5,7 +5,10 @@
 * Gradle
 * Lombok
 * Spring Data JPA
+* PostgreSQL
 * H2 in-memory DB
+* Docker
+* Docker compose
 * Mockito
 * MockMvc
 * Flyway
@@ -20,14 +23,15 @@
 
 * Navigate the root folder /consignment under the command line
 * Run the command to build the whole project: **gradle clean build**
-* Run the command to start the application: **java -jar ./build/libs/consignment-0.0.1-SNAPSHOT.jar**
+* Either run the command to start the application: **java -jar ./build/libs/consignment-0.0.1-SNAPSHOT.jar**
+* Or run **docker-compose up**, then application and postgres DB are both up and running
 
 
 ## How to access the spring boot restful application
-* Please use postman to test the API
-* You can access via the URL below:
+* Please use **Postman** to test the API
+* You can access via the URL below with **POST** Http Method:
 `http://localhost:8080/consignment/connot-number`
-* Send a JSON body along with the request to the URL. Here is an example of data sent.
+* Send a JSON Body along with the request to the URL. Here is an example of data sent.
 ```
 {
   "carrierName":"FreightmateCourierCo",
@@ -38,13 +42,15 @@
   "rangeEnd":20000
   }
 ```
-* Alternatively, you can find the postman collection file in postman folder and modify the data inside JSON body as you want
+* Alternatively, you can find the postman collection file in postman directory and modify the data inside JSON body as you want
 
 ## Advantages of this application
 * Hibernate builds the entity layer
 * Flyway prepares the initial data
-* Spring Data JPA builds the repository layer
+* Spring Data JPA builds the repository layer & H2 in-mem database used as Unit Test to test this layer
 * Mockito and MockMvc unit test service and controller layers
 * Defined customised exceptions for better error handling and all the exceptions can be centrally handled in one place (ControllerExceptionHandler.java)
 * Lombok automatically generates getter,setter, constructor, hashcode, log etc.
+* Docker compose has been used in local to easily set up the local environment
+* Dockerfile utilize multiple stages and put application files into docker instead of using fat jar
 * High test coverage
