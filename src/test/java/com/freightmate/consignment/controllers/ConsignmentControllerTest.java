@@ -1,6 +1,5 @@
 package com.freightmate.consignment.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.freightmate.consignment.dtos.CarrierAccountDto;
 import com.freightmate.consignment.exceptions.CarrierNotFoundException;
@@ -17,12 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -66,7 +64,7 @@ class ConsignmentControllerTest {
 
         ArgumentCaptor<CarrierAccountDto> captor = ArgumentCaptor.forClass(CarrierAccountDto.class);
 
-        when(consignmentService.generateConnoteNumber(captor.capture())).thenReturn(expectedConnoteNumber);
+        when(consignmentService.generateConnoteNumber(any())).thenReturn(expectedConnoteNumber);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/consignment/connote-number")
@@ -74,6 +72,8 @@ class ConsignmentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expectedConnoteNumber));
+
+        verify(consignmentService, times(1)).generateConnoteNumber(captor.capture());
 
         assertEquals(accountDto, captor.getValue());
 
