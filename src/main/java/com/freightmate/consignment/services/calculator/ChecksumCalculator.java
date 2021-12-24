@@ -8,17 +8,22 @@ import java.util.List;
 public class ChecksumCalculator {
 
     public Integer calculateChecksum(List<Integer> indexList){
-        Integer num1 = 0;
-        Integer num2 = 0;
 
-        for(int i = indexList.size() - 1; i >= 0; i -= 2) {
-            num1 += indexList.get(i);
+        int num1 = 0;
+        int num2 = 0;
+        int indexOfFirstEle = indexList.get(indexList.size() - 1);
+
+
+        for(int i = indexList.size() - 1; i >= 0; i--) {
+            if(Math.subtractExact(indexOfFirstEle, i) % 2 == 0) {
+                num1 += indexList.get(i);
+            } else {
+                num2 += indexList.get(i);
+            }
         }
+
         num1 *= 3;
 
-        for(int j = indexList.size() - 2; j >= 0; j -= 2) {
-            num2 += indexList.get(j);
-        }
         num2 *= 7;
 
         Integer sum = Math.addExact(num1, num2);
