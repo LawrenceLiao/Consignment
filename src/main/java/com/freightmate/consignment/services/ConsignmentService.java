@@ -33,8 +33,11 @@ public class ConsignmentService {
         Integer currentIndex = Math.incrementExact(carrierAccountDto.getLastUsedIndex());
 
         log.info("Tht current index is {}", currentIndex);
+
         Carrier carrier = carrierRepository.findByName(carrierAccountDto.getCarrierName().toLowerCase(Locale.ROOT))
                 .orElseThrow( () -> new CarrierNotFoundException("No carrier with the name given found in database"));
+
+        log.info("Operating carrier's ID is {} and name is {}", carrier.getId(), carrier.getName() );
 
         String prefix = carrier.getPrefix();
         String accountNumber = carrierAccountDto.getAccountNumber();
@@ -44,12 +47,15 @@ public class ConsignmentService {
 
         List<String> outputElements = List.of(prefix, accountNumber,
                 formatter.mapIndexListToString(listOfFormattedIndex), checkSum.toString());
-        return formatter.mapStringListToString(outputElements);
+
+        String connoteNumber = formatter.mapStringListToString(outputElements);
+
+        log.info("Generated connote number is {}", connoteNumber);
+        return connoteNumber;
     }
 
     private Boolean isIndexValid(Integer lastIndex, Integer rangeStart, Integer rangeEnd) {
         return lastIndex >= rangeStart && lastIndex < rangeEnd;
     }
-
 
 }

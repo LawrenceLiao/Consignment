@@ -5,7 +5,6 @@ import com.freightmate.consignment.services.ConsignmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +16,12 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/consignment")
-@Validated
 public class ConsignmentController {
 
     private final ConsignmentService consignmentService;
 
     @PostMapping("/connote-number")
-    public ResponseEntity<String> getConnoteNumber(@Valid @RequestBody CarrierAccountDto carrierAccount) {
+    public ResponseEntity<String> getConnoteNumber(@RequestBody CarrierAccountDto carrierAccount) {
         String outputConnoteNumber = consignmentService.generateConnoteNumber(carrierAccount);
         return ResponseEntity.ok(outputConnoteNumber);
     }

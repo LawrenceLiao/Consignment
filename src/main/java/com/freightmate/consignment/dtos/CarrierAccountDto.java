@@ -14,10 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class CarrierAccountDto {
 
-    @NotBlank
     private String carrierName;
 
-    @NotBlank
     private String accountNumber;
 
     private Integer digits;
