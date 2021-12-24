@@ -19,7 +19,7 @@ public class Carrier {
     @Column( name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column( name = "name", updatable = false, nullable = false)
+    @Column( name = "name", unique = true, updatable = false, nullable = false)
     private String name;
 
     @Column( name = "prefix", nullable = false)
