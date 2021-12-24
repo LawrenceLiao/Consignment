@@ -5,13 +5,14 @@ import com.freightmate.consignment.exceptions.CarrierNotFoundException;
 import com.freightmate.consignment.exceptions.IndexInvalidException;
 import com.freightmate.consignment.models.Carrier;
 import com.freightmate.consignment.repositories.CarrierRepository;
+import com.freightmate.consignment.services.calculator.ChecksumCalculator;
 import com.freightmate.consignment.utils.ConsignmentIndexFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.StringJoiner;
+import java.util.Locale;
 
 @Slf4j
 @Service
@@ -20,6 +21,8 @@ public class ConsignmentService {
 
     private final CarrierRepository carrierRepository;
 
+    private final ChecksumCalculator calculator;
+
     private final ConsignmentIndexFormatter formatter;
 
 
@@ -27,17 +30,26 @@ public class ConsignmentService {
         if(!isIndexValid(carrierAccountDto.getLastUsedIndex(), carrierAccountDto.getRangeStart(), carrierAccountDto.getRangeEnd())) {
             throw new IndexInvalidException( "The index is invalid, please check the range and re-enter" );
         }
-        Integer currentIndex = carrierAccountDto.getLastUsedIndex() + 1;
+        Integer currentIndex = Math.incrementExact(carrierAccountDto.getLastUsedIndex());
 
-        Carrier carrier = carrierRepository.findByName(carrierAccountDto.getCarrierName())
+        log.info("Tht current index is {}", currentIndex);
+        Carrier carrier = carrierRepository.findByName(carrierAccountDto.getCarrierName().toLowerCase(Locale.ROOT))
                 .orElseThrow( () -> new CarrierNotFoundException("No carrier with the name given found in database"));
 
         String prefix = carrier.getPrefix();
         String accountNumber = carrierAccountDto.getAccountNumber();
         List<Integer> listOfFormattedIndex = formatter.formattingIndexAsPerDigits(currentIndex, carrierAccountDto.getDigits());
+
+        Integer checkSum = calculator.calculateChecksum(listOfFormattedIndex);
+
+        List<String> outputElements = List.of(prefix, accountNumber,
+                formatter.mapIndexListToString(listOfFormattedIndex), checkSum.toString());
+        return formatter.mapStringListToString(outputElements);
     }
 
     private Boolean isIndexValid(Integer lastIndex, Integer rangeStart, Integer rangeEnd) {
-        return lastIndex < rangeStart || lastIndex >= rangeEnd;
+        return lastIndex >= rangeStart && lastIndex < rangeEnd;
     }
+
+
 }

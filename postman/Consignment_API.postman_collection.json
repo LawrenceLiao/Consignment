@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "78a7df94-c19c-41ae-add5-46ab687da77f",
+		"name": "Consignment_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "generate-connote-number",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"carrierName\":\"FreightmateCourierCo\",\n  \"accountNumber\":\"123ABC\",\n  \"digits\":10,\n  \"lastUsedIndex\":19604,\n  \"rangeStart\":19000,\n  \"rangeEnd\":20000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/consignment/connote-number",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"consignment",
+						"connote-number"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

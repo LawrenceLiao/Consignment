@@ -28,4 +28,9 @@ public class ConsignmentIndexFormatter {
                 .collect(Collectors.joining());
     }
 
+    public String mapStringListToString(List<String> stringList) {
+        return stringList.stream()
+                .collect(Collectors.joining());
+    }
+
 }

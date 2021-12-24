@@ -1,0 +1,1 @@
+INSERT INTO carrier (name, prefix, created_date_time, updated_date_time) VALUES ('freightmatecourierco', 'FMCC', now(), now());
