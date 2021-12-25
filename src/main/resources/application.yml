@@ -12,10 +12,6 @@ spring:
     password: admin
   flyway:
     locations: classpath:db/migration
-    url: jdbc:postgresql://localhost:5432/postgres
-    user: postgres
-    password: admin
-    enabled: true
 
 logging:
   pattern:

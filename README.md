@@ -18,13 +18,17 @@
 2. [How to access the spring boot restful application](#How-to-access-the-spring-boot-restful-application)
 3. [Advantages of this application](#Advantages-of-this-application)
 
+### This is the springBoot based RESTful API. It supports the below functions:
+
+* Application supports H2 in-mem DB and PostgreSQL DB, by default PostgreSQL DB is being used. If you want to use H2 in-mem DB, application-h2.yml shall be used
+* Generate Consignment Note Number according to input data
 
 ## How to run this application
 
-* Navigate the root folder /consignment under the command line
+* Navigate the root folder **/consignment** under the command line
 * Run the command to build the whole project: **gradle clean build**
-* Either run the command to start the application: **java -jar ./build/libs/consignment-0.0.1-SNAPSHOT.jar**
-* Or run **docker-compose up**, then application and postgres DB are both up and running
+* Either run the command to start the application with H2 DB: **java -jar -Dspring.profiles.active=h2 ./build/libs/consignment-0.0.1-SNAPSHOT.jar**
+* Or run **docker-compose up**, then the application and PostgreSQL DB are both up and running
 
 
 ## How to access the spring boot restful application
